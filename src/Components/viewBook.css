@@ -1,0 +1,32 @@
+.bannerImage .bigBanner {
+  object-fit: cover;
+  width: 100%;
+  height: 350px;
+}
+
+.backButton {
+  position: absolute;
+}
+
+.smallBanner {
+  width: 175px;
+  border-radius: 11px;
+  bottom: 175px;
+  position: relative;
+}
+
+.content {
+  margin-left: 10%;
+}
+.flag {
+  background-color: #ffbf49;
+  color: white;
+}
+
+.mainContent {
+  position: absolute;
+}
+
+.contentText {
+  text-align: justify;
+}
