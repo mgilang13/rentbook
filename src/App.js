@@ -4,51 +4,60 @@ import Topbar from "./Components/Topbar";
 import "./App.css";
 import Slider from "./Components/mainSlider";
 import AddBookModal from "./Components/AddBook";
-import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ViewBook from "./Components/ViewBook";
 
 const URL_STRING = "api/v1/book?page=1";
+const id = localStorage.getItem("id");
+const token = localStorage.getItem("token");
+
 class App extends Component {
-  state = {
-    library: [],
-    idbook:''
-  };
-
-  componentDidMount = () => {
-    this.getDataBook();
-  };
-
-  getDataBook() {
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
-
-    Axios.get(URL_STRING, {
+  constructor(props) {
+    super(props);
+    this.state = {
+      library: [],
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Algernon",
         "User-token": id,
         "x-token": "barier " + token
       }
+    };
+  }
+  
+  componentDidMount = () => {
+    if(localStorage.getItem("token") == null){
+      this.props.history.push('/')
+    } else {
+      this.getDataBook();
+    }
+  };
+  
+  getDataBook() {
+   
+  
+    Axios.get(URL_STRING, {
+    headers: this.state.headers
     }).then(data => {
       this.setState({
         library: data.data.data
       });
-      console.log(data);
-    });
+    }); 
+    
   }
 
+  
   viewBookById(id) {
     localStorage.setItem('idbook', id);
   }
 
   logout = () => {
     localStorage.clear('token');
+    localStorage.clear('id');
     this.props.history.push('/')
   }
   render() {
+    
     const { library } = this.state;
-  
+   
   // function refreshPage() {
   //   window.location.reload(false);
   // }
@@ -84,7 +93,7 @@ class App extends Component {
                 <b>Add Book*</b>
               </a>
               <a
-                href="/#"
+                href="/"
                 className="list-group-item list-group-item-action bg-light"
                 onClick={this.logout}
               >
@@ -92,7 +101,7 @@ class App extends Component {
               </a>
             </div>
           </div>
-          <AddBookModal />
+          <AddBookModal dataHeader = {this.state.headers}/>
           <div id="page-content-wrapper">
             <Topbar />
             <Slider dataFromBook={this.state.library} />
@@ -107,7 +116,8 @@ class App extends Component {
                     key={item.id}
                     className="shadow mycard card ml-1 mb-4 mr-2 "
                     >
-                    <a onClick={() => this.viewBookById(item.id)} className="stretched-link" href="api/v1/book/viewBook/"></a>
+                       {/* eslint-disable-next-line */}
+                    <a onClick={() => this.viewBookById(item.id)} className="stretched-link" href="/viewBook/"></a>
                         <img
                           className="bookImage"
                           src={require("./Assets/Images/" + item.image_url)}

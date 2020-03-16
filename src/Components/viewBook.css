@@ -30,3 +30,14 @@
 .contentText {
   text-align: justify;
 }
+
+.menu {
+  position: absolute;
+  height:50px;
+}
+
+.editDelete a {
+  text-decoration: none;
+  color:white;
+  margin-left:10px;
+}

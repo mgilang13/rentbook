@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Axios from "axios";
+ import Axios from "axios";
 
-class AddBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+const idbook = localStorage.getItem('idbook');
 
+const URL_STRING_READ_BOOK = "api/v1/book/viewBook/"+idbook;
+const URL_STRING_UPDATE_BOOK = "api/v1/book/updateBook/"+idbook;
+class EditBook extends Component {
+  state = {
     title: "",
     author: "",
     description: "",
@@ -13,20 +14,39 @@ class AddBook extends Component {
     date_released: "",
     id_genre: "",
     available: "",
-    headers: this.props.dataHeader
-    };
+    bookById:[]
+  };
+
+  componentDidMount = () => {
+    this.getBookById();
+  };
+
+  getBookById() {
+    const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token")
+
+    Axios.get(URL_STRING_READ_BOOK, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Algernon",
+        "User-token": id,
+        "x-token": "barier " + token
+      }
+    }).then(data => {
+      this.setState({
+        image_url: data.data.result[0].image_url,
+        title: data.data.result[0].title,
+        author: data.data.result[0].author,
+        description: data.data.result[0].description,
+        date_released: data.data.result[0].date_released.slice(0,10),
+        id_genre: data.data.result[0].id_genre,
+        available: data.data.result[0].available,
+      });
+      console.log(data.data.result[0].image_url);
+    });
   }
   
-  componentDidMount() {
-    this.viewGenre()
-  }
-
-  viewGenre = () => {
-    Axios.get('api/v1/genre', {headers: this.state.headers}).then(dataGenre => {
-      console.log('dataGenre', dataGenre)
-    })
-  }
-  addBookData = () => {
+  updateBookData = () => {
     const {
       title,
       author,
@@ -45,15 +65,17 @@ class AddBook extends Component {
       id_genre,
       available
     };
-    Axios.post("api/v1/book/addBook", book).then(res => {
+    console.log('book data : ', book)
+    Axios.patch(URL_STRING_UPDATE_BOOK, book).then(res => {
       console.log(res);
     });
   };
   render() {
+    const {bookById} = this.state
     return (
       <div
         className="modal fade"
-        id="exampleModal"
+        id="editModal"
         tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -63,7 +85,7 @@ class AddBook extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Add Data
+                Edit Data
               </h5>
               <button
                 type="button"
@@ -81,6 +103,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.image_url}
                       className="form-control"
                       placeholder="Url Image"
                       onChange={e => {
@@ -96,6 +119,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.title}
                       className="form-control"
                       placeholder="Title"
                       onChange={e => {
@@ -111,6 +135,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.author}
                       className="form-control"
                       placeholder="Author"
                       onChange={e => {
@@ -126,6 +151,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.description}
                       className="form-control"
                       placeholder="Description"
                       onChange={e => {
@@ -143,6 +169,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.date_released}
                       className="form-control"
                       placeholder="Date Released"
                       onChange={e => {
@@ -156,8 +183,9 @@ class AddBook extends Component {
                 <div className="form-group row">
                   <label className="col-sm-3 col-form-label">Genre</label>
                   <div className="col">
-                    {/* <input
+                    <input
                       type="text"
+                      value={this.state.id_genre}
                       className="form-control"
                       placeholder="Genre"
                       onChange={e => {
@@ -165,11 +193,7 @@ class AddBook extends Component {
                           id_genre: e.target.value
                         });
                       }}
-                    ></input> */}
-                    <select class="custom-select">
-                      <option selected>Choose....</option>
-                      <option value="1">Adventure</option>
-                    </select>
+                    ></input>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -179,6 +203,7 @@ class AddBook extends Component {
                   <div className="col">
                     <input
                       type="text"
+                      value={this.state.available}
                       className="form-control"
                       placeholder="Availability"
                       onChange={e => {
@@ -194,7 +219,7 @@ class AddBook extends Component {
             <div className="modal-footer">
               <button
                 type="button"
-                onClick={this.addBookData}
+                onClick={this.updateBookData}
                 className="btn btn-warning text-white"
               >
                 Save
@@ -207,4 +232,4 @@ class AddBook extends Component {
   }
 }
 
-export default AddBook;
+export default EditBook;
