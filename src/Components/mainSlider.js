@@ -15,11 +15,11 @@ class mainSlider extends React.Component {
             wrapAround: true
           }}
         >
-          {dataBook.map((item) => (
+          {dataBook.map(item => (
             <div className="slider" key={item.id}>
               <img src={require("../Assets/Images/" + item.image_url)} alt="" />
               <h5 className="sliderTitle">{item.title}</h5>
-              <h5 className="sliderAuthor">Author {item.author}</h5>
+              <h5 className="sliderAuthor">{item.author}</h5>
             </div>
           ))}
         </Slider>
