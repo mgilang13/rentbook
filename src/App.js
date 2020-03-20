@@ -100,52 +100,54 @@ class App extends Component {
             <h3>List Book</h3>
             <div className="d-flex flex-wrap justify-content-center">
               {this.props.book.book.bookData.result === undefined ||
-              this.props.book.book.bookData.result.length == 0
-                ? // <div>Data kosong</div>
-                  library.map(item => (
-                    <div
-                      key={item.id}
-                      className="shadow mycard card ml-1 mb-4 mr-2 "
-                    >
-                      {/* eslint-disable-next-line */}
-                      <Link
-                        onClick={() => this.viewBookById(item.id)}
-                        className="stretched-link"
-                        to="/viewBook/"
-                      ></Link>
-                      <img
-                        className="bookImage"
-                        src={require("./Assets/Images/" + item.image_url)}
-                        alt="This is book"
-                      />
-                      <h5 className="card-title">{item.title}</h5>
-                      <div className="card-body">
-                        <p className="card-text">{item.description}</p>
-                      </div>
+              this.props.book.book.bookData.result.length === 0 ? (
+                <div>Data kosong</div>
+              ) : (
+                // library.map(item => (
+                //   <div
+                //     key={item.id}
+                //     className="shadow mycard card ml-1 mb-4 mr-2 "
+                //   >
+                //     {/* eslint-disable-next-line */}
+                //     <Link
+                //       onClick={() => this.viewBookById(item.id)}
+                //       className="stretched-link"
+                //       to="/viewBook/"
+                //     ></Link>
+                //     <img
+                //       className="bookImage"
+                //       src={require("./Assets/Images/" + item.image_url)}
+                //       alt="This is book"
+                //     />
+                //     <h5 className="card-title">{item.title}</h5>
+                //     <div className="card-body">
+                //       <p className="card-text">{item.description}</p>
+                //     </div>
+                //   </div>
+                // ))
+                this.props.book.book.bookData.result.map(item => (
+                  <div
+                    key={item.id}
+                    className="shadow mycard card ml-1 mb-4 mr-2 "
+                  >
+                    {/* eslint-disable-next-line */}
+                    <Link
+                      onClick={() => this.viewBookById(item.id)}
+                      className="stretched-link"
+                      to="/viewBook/"
+                    ></Link>
+                    <img
+                      className="bookImage"
+                      src={require("./Assets/Images/" + item.image_url)}
+                      alt="This is book"
+                    />
+                    <h5 className="card-title">{item.title}</h5>
+                    <div className="card-body">
+                      <p className="card-text">{item.description}</p>
                     </div>
-                  ))
-                : this.props.book.book.bookData.result.map(item => (
-                    <div
-                      key={item.id}
-                      className="shadow mycard card ml-1 mb-4 mr-2 "
-                    >
-                      {/* eslint-disable-next-line */}
-                      <Link
-                        onClick={() => this.viewBookById(item.id)}
-                        className="stretched-link"
-                        to="/viewBook/"
-                      ></Link>
-                      <img
-                        className="bookImage"
-                        src={require("./Assets/Images/" + item.image_url)}
-                        alt="This is book"
-                      />
-                      <h5 className="card-title">{item.title}</h5>
-                      <div className="card-body">
-                        <p className="card-text">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

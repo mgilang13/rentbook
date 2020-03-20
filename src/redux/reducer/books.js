@@ -98,22 +98,6 @@ const bookReducer = (state = initialValue, action) => {
       };
 
     case "UPDATE_BOOK_FULFILLED":
-      //   console.log("state.bookData:", state.bookData);
-      //   //   state.bookData.result.replace(JSON.parse(action.payload.config.data));
-      //   console.log("payload data", action.payload.data);
-      //   console.log("state book data 2", state.bookData.result);
-      //   console.log("action payload config", action.payload.config.data);
-      //   let items = state.bookData.result;
-      //   const old = state.bookData.result;
-      //   const baru = action.payload.config.data;
-      //   items = baru;
-      //   //   state.bookData.result.push.apply(state.bookData.result, items);
-      //   console.log("items items", items);
-      //   console.log("items items old", JSON.stringify(old[0]));
-      //   console.log("state.bookdata result", state.bookData.result);
-      //   old = items;
-      //   state.bookData.data.push(old);
-
       return {
         ...state,
         isPending: false,
@@ -160,14 +144,105 @@ const bookReducer = (state = initialValue, action) => {
       };
 
     case "SEARCH_BOOK_FULFILLED":
-      // state.bookData.data.push(JSON.parse(action.payload.config.data));
-      // console.log("state.bookData:", state.bookData);
       return {
         ...state,
         isPending: false,
         isFulFilled: true,
         bookData: action.payload.data
       };
+
+    case "SORT_BOOK_TITLE_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "SORT_BOOK_TITLE_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "SORT_BOOK_TITLE_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
+    case "SORT_BOOK_DATE_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "SORT_BOOK_DATE_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "SORT_BOOK_DATE_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
+    case "SORT_BOOK_GENRE_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "SORT_BOOK_GENRE_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "SORT_BOOK_GENRE_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
+    case "SORT_BOOK_AVAIL_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "SORT_BOOK_AVAIL_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "SORT_BOOK_AVAIL_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
     default:
       return state;
   }

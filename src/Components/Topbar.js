@@ -1,5 +1,11 @@
 import { connect } from "react-redux";
 import { searchBookTitle } from "../redux/actions/books";
+import {
+  sortBookTitle,
+  sortBookDate,
+  sortBookGenre,
+  sortBookAvail
+} from "../redux/actions/books";
 
 import React, { Component } from "react";
 import "./topbar.css";
@@ -23,6 +29,22 @@ class Topbar extends Component {
     this.setState({ query }, () => {
       this.getSearchResults(query);
     });
+  };
+
+  sortTitle = async () => {
+    await this.props.dispatch(sortBookTitle());
+  };
+
+  sortDate = async () => {
+    await this.props.dispatch(sortBookDate());
+  };
+
+  sortGenre = async () => {
+    await this.props.dispatch(sortBookGenre());
+  };
+
+  sortAvail = async () => {
+    await this.props.dispatch(sortBookAvail());
   };
 
   render() {
@@ -61,17 +83,36 @@ class Topbar extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                All Categories
+                Sort By
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button className="dropdown-item" type="button">
-                  Action
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.sortTitle}
+                >
+                  Title
                 </button>
-                <button className="dropdown-item" type="button">
-                  Another action
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.sortDate}
+                >
+                  Date Released
                 </button>
-                <button className="dropdown-item" type="button">
-                  Something else here
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.sortGenre}
+                >
+                  Genre
+                </button>
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.sortAvail}
+                >
+                  Availability
                 </button>
               </div>
             </div>

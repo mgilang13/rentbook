@@ -8,6 +8,10 @@ const URL_STRING_TO_ADD = "/api/v1/book/addBook";
 const URL_STRING_TO_UPDATE = "/api/v1/book/updateBook/" + idbook;
 const URL_STRING_TO_DELETE = "api/v1/book/deleteBook/" + idbook;
 const URL_STRING_TO_SEARCH = "api/v1/book/searchBook/?keyword=";
+const URL_STRING_TO_SORT_TITLE = "api/v1/book/sortBookByTitle";
+const URL_STRING_TO_SORT_DATE = "api/v1/book/sortBookByDate";
+const URL_STRING_TO_SORT_GENRE = "api/v1/book/sortBookByGenre";
+const URL_STRING_TO_SORT_AVAIL = "api/v1/book/sortBookByAvail";
 
 const idUser = localStorage.getItem("id");
 const token = localStorage.getItem("token");
@@ -65,5 +69,33 @@ export const searchBookTitle = title => {
   return {
     type: "SEARCH_BOOK",
     payload: Axios.get(URL_STRING_TO_SEARCH + title)
+  };
+};
+
+export const sortBookTitle = () => {
+  return {
+    type: "SORT_BOOK_TITLE",
+    payload: Axios.get(URL_STRING_TO_SORT_TITLE)
+  };
+};
+
+export const sortBookDate = () => {
+  return {
+    type: "SORT_BOOK_DATE",
+    payload: Axios.get(URL_STRING_TO_SORT_DATE)
+  };
+};
+
+export const sortBookGenre = () => {
+  return {
+    type: "SORT_BOOK_GENRE",
+    payload: Axios.get(URL_STRING_TO_SORT_GENRE)
+  };
+};
+
+export const sortBookAvail = () => {
+  return {
+    type: "SORT_BOOK_AVAIL",
+    payload: Axios.get(URL_STRING_TO_SORT_AVAIL)
   };
 };
