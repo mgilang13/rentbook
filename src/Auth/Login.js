@@ -24,6 +24,7 @@ class Login extends Component {
       console.log("result result result", res.data.result.token);
       localStorage.setItem("token", res.data.result.token);
       localStorage.setItem("id", res.data.result.id);
+      localStorage.setItem("keyword", "");
 
       this.props.history.push("/home");
       window.location.reload();

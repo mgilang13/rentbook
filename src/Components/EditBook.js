@@ -5,10 +5,10 @@ import { updateBook } from "../redux/actions/books";
 import React, { Component } from "react";
 import Axios from "axios";
 
-const idbook = localStorage.getItem("idbook");
+// const idbook = localStorage.getItem("idbook");
 
-const URL_STRING_READ_BOOK = "api/v1/book/viewBook/" + idbook;
-const URL_STRING_UPDATE_BOOK = "api/v1/book/updateBook/" + idbook;
+// const URL_STRING_READ_BOOK = "api/v1/book/viewBook/" + idbook;
+// const URL_STRING_UPDATE_BOOK = "api/v1/book/updateBook/" + idbook;
 class EditBook extends Component {
   state = {
     title: "",
@@ -30,8 +30,8 @@ class EditBook extends Component {
   };
 
   async getBookById() {
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
+    // const id = localStorage.getItem("id");
+    // const token = localStorage.getItem("token");
 
     // Axios.get(URL_STRING_READ_BOOK, {
     //   headers: {
@@ -213,11 +213,21 @@ class EditBook extends Component {
                     Date Released
                   </label>
                   <div className="col">
-                    <input
+                    {/* <input
                       type="text"
                       value={this.state.date_released}
                       className="form-control"
                       placeholder="Date Released"
+                      onChange={e => {
+                        this.setState({
+                          date_released: e.target.value
+                        });
+                      }}
+                    ></input> */}
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={this.state.date_released.slice(0, 10)}
                       onChange={e => {
                         this.setState({
                           date_released: e.target.value

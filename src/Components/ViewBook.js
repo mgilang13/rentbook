@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 Axios.defaults.baseURL = "http://localhost:3001/";
 
 const idbook = localStorage.getItem("idbook");
-const URL_STRING = "api/v1/book/viewBook/" + idbook;
+// const URL_STRING = "api/v1/book/viewBook/" + idbook;
 
 const URL_STRING_RENT = "api/v1/book/rentBook/" + idbook;
 
@@ -20,24 +20,46 @@ class ViewBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookById: []
+      bookById: [],
+      dataGenre: [],
+      dataAvail: [],
+      idgenre: "",
+      avail: "mt-5 text-success"
     };
   }
   componentDidMount = () => {
-    console.log("idbook", idbook);
     if (idbook == null) {
       this.props.history.push("/home");
     } else {
       this.getBookById();
+      this.viewGenre();
+      this.viewAvail();
+
       // }
     }
+  };
+
+  viewGenre = () => {
+    Axios.get("api/v1/genre/").then(dataGenre => {
+      this.setState({
+        dataGenre: dataGenre.data.result
+      });
+    });
+  };
+
+  viewAvail = () => {
+    Axios.get("api/v1/avail/availCheck").then(dataAvail => {
+      this.setState({
+        dataAvail: dataAvail.data.result
+      });
+    });
   };
 
   rentBook() {
     const available = 1;
     Axios.patch(URL_STRING_RENT, available)
       .then(res => {
-        console.log(res);
+        window.location.reload();
       })
       .catch(err => {
         if (err.response.status === 405) {
@@ -46,7 +68,6 @@ class ViewBook extends Component {
       });
   }
   async getBookById() {
-    console.log("id bookbyid", this.state.bookById);
     // if (this.state.bookById.length == 0) {
     //   this.props.history.push("/home");
     // } else {
@@ -65,15 +86,19 @@ class ViewBook extends Component {
     // });
 
     await this.props.dispatch(getBookById());
-    console.log("props book", this.props.book);
     this.setState({
       bookById: this.props.book.book.bookData.result
     });
     // }
   }
 
+  back() {
+    localStorage.removeItem("idbook");
+  }
+
   render() {
     const { bookById } = this.state;
+
     return (
       <div>
         <EditBookModal />
@@ -84,6 +109,7 @@ class ViewBook extends Component {
               <div className="col-sm-5 menu row">
                 <div className="col-sm-2">
                   <Link
+                    onClick={this.back}
                     to="/home"
                     className="btn rounded-circle btn-light backButton mt-3 ml-3"
                   >
@@ -123,20 +149,19 @@ class ViewBook extends Component {
                 <div className="col-sm-7">
                   <div className="d-flex">
                     <h4 className="flag flex-wrap pl-2 pr-2 pt-1 pb-1 rounded">
-                      {item.genre}
+                      {item.name}
                     </h4>
                   </div>
                   <h2>
                     <strong>{item.title}</strong>
                   </h2>
                   <p>
-                    <strong>{item.date_released.slice(0, 10)}</strong>
+                    <strong>{item.df}</strong>
                   </p>
                 </div>
-                <script>console.log("hai")</script>
                 <div className="col-sm-5 pr-5">
-                  <h2 id="available" align="right" className="mt-5 text-danger">
-                    {item.availability}
+                  <h2 id="available" align="right" className={item.classname}>
+                    {item.status}
                   </h2>
                 </div>
                 <div className="d-flex pr-5">
@@ -144,12 +169,10 @@ class ViewBook extends Component {
                 </div>
               </div>
               <div className="col d-flex">
-                <button
-                  className="col btn btn-lg btn-warning align-self-end text-white"
-                  onClick={this.rentBook}
-                >
+                {/* eslint-disable-next-line */}
+                <a className={item.classbutton} onClick={this.rentBook}>
                   <strong>Borrow</strong>
-                </button>
+                </a>
               </div>
             </div>
           </div>

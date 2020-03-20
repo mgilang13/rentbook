@@ -26,21 +26,12 @@ class App extends Component {
     }
   };
 
-  async getDataBook() {
-    // Axios.get(URL_STRING, {
-    // headers: this.state.headers
-    // }).then(data => {
-    //   this.setState({
-    //     library: data.data.data
-    //   });
-    // });
-
+  getDataBook = async () => {
     await this.props.dispatch(getAllBook());
-    // console.log("props book", this.props.book);
     this.setState({
-      library: this.props.book.book.bookData.data
+      library: this.props.book.book.bookData
     });
-  }
+  };
 
   viewBookById(id) {
     localStorage.setItem("idbook", id);
@@ -53,9 +44,11 @@ class App extends Component {
     localStorage.clear("id");
     this.props.history.push("/");
   };
+
   render() {
     const { library } = this.state;
-    console.log("library", this.state.library);
+    console.log("CUK: ", this.props.book.book.bookData.result);
+    console.log("library", library);
     // function refreshPage() {
     //   window.location.reload(false);
     // }
@@ -106,32 +99,53 @@ class App extends Component {
           <div className="container mt-5">
             <h3>List Book</h3>
             <div className="d-flex flex-wrap justify-content-center">
-              {library === undefined ? (
-                <div>Data kosong</div>
-              ) : (
-                library.map(item => (
-                  <div
-                    key={item.id}
-                    className="shadow mycard card ml-1 mb-4 mr-2 "
-                  >
-                    {/* eslint-disable-next-line */}
-                    <Link
-                      onClick={() => this.viewBookById(item.id)}
-                      className="stretched-link"
-                      to="/viewBook/"
-                    ></Link>
-                    <img
-                      className="bookImage"
-                      src={require("./Assets/Images/" + item.image_url)}
-                      alt="This is book"
-                    />
-                    <h5 className="card-title">{item.title}</h5>
-                    <div className="card-body">
-                      <p className="card-text">{item.description}</p>
+              {this.props.book.book.bookData.result === undefined ||
+              this.props.book.book.bookData.result.length == 0
+                ? // <div>Data kosong</div>
+                  library.map(item => (
+                    <div
+                      key={item.id}
+                      className="shadow mycard card ml-1 mb-4 mr-2 "
+                    >
+                      {/* eslint-disable-next-line */}
+                      <Link
+                        onClick={() => this.viewBookById(item.id)}
+                        className="stretched-link"
+                        to="/viewBook/"
+                      ></Link>
+                      <img
+                        className="bookImage"
+                        src={require("./Assets/Images/" + item.image_url)}
+                        alt="This is book"
+                      />
+                      <h5 className="card-title">{item.title}</h5>
+                      <div className="card-body">
+                        <p className="card-text">{item.description}</p>
+                      </div>
                     </div>
-                  </div>
-                ))
-              )}
+                  ))
+                : this.props.book.book.bookData.result.map(item => (
+                    <div
+                      key={item.id}
+                      className="shadow mycard card ml-1 mb-4 mr-2 "
+                    >
+                      {/* eslint-disable-next-line */}
+                      <Link
+                        onClick={() => this.viewBookById(item.id)}
+                        className="stretched-link"
+                        to="/viewBook/"
+                      ></Link>
+                      <img
+                        className="bookImage"
+                        src={require("./Assets/Images/" + item.image_url)}
+                        alt="This is book"
+                      />
+                      <h5 className="card-title">{item.title}</h5>
+                      <div className="card-body">
+                        <p className="card-text">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
             </div>
           </div>
         </div>

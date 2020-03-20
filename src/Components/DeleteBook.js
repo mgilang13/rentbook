@@ -1,17 +1,12 @@
 import { connect } from "react-redux";
 import { deleteBook } from "../redux/actions/books";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+
 import React, { Component } from "react";
-import App from "../App";
-import Axios from "axios";
+// import App from "../App";
+// import Axios from "axios";
 import { Link } from "react-router-dom";
-const idbook = localStorage.getItem("idbook");
-const URL_STRING_DELETE_BOOK = "api/v1/book/deleteBook/" + idbook;
+// const idbook = localStorage.getItem("idbook");
+// const URL_STRING_DELETE_BOOK = "api/v1/book/deleteBook/" + idbook;
 
 class DeleteBook extends Component {
   //   constructor(props) {
@@ -22,8 +17,8 @@ class DeleteBook extends Component {
   //   }
   deleteBook = async e => {
     e.preventDefault();
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
+    // const id = localStorage.getItem("id");
+    // const token = localStorage.getItem("token");
     // this.setState({
     //   idbook: id
     // });

@@ -162,10 +162,19 @@ class AddBook extends Component {
                     Date Released
                   </label>
                   <div className="col">
-                    <input
+                    {/* <input
                       type="text"
                       className="form-control"
                       placeholder="Date Released"
+                      onChange={e => {
+                        this.setState({
+                          date_released: e.target.value
+                        });
+                      }}
+                    ></input> */}
+                    <input
+                      type="date"
+                      className="form-control"
                       onChange={e => {
                         this.setState({
                           date_released: e.target.value

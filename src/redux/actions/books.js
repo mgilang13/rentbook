@@ -1,11 +1,13 @@
 import Axios from "axios";
 const idbook = localStorage.getItem("idbook");
+// const keyword = localStorage.getItem("keyword");
 
-const URL_STRING_TO_GET = "/api/v1/book";
+const URL_STRING_TO_GET = "/api/v1/book/?search=";
 const URL_STRING_TO_GET_BOOK_BY_ID = "/api/v1/book/viewBook/" + idbook;
 const URL_STRING_TO_ADD = "/api/v1/book/addBook";
 const URL_STRING_TO_UPDATE = "/api/v1/book/updateBook/" + idbook;
 const URL_STRING_TO_DELETE = "api/v1/book/deleteBook/" + idbook;
+const URL_STRING_TO_SEARCH = "api/v1/book/searchBook/?keyword=";
 
 const idUser = localStorage.getItem("id");
 const token = localStorage.getItem("token");
@@ -56,5 +58,12 @@ export const deleteBook = () => {
   return {
     type: "DELETE_BOOK",
     payload: Axios.delete(URL_STRING_TO_DELETE)
+  };
+};
+
+export const searchBookTitle = title => {
+  return {
+    type: "SEARCH_BOOK",
+    payload: Axios.get(URL_STRING_TO_SEARCH + title)
   };
 };

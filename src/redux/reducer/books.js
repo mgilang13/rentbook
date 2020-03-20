@@ -25,11 +25,12 @@ const bookReducer = (state = initialValue, action) => {
       };
 
     case "GET_BOOK_FULFILLED":
+      // console.log("bookdata: ", action.payload.data.data);
       return {
         ...state,
         isPending: false,
         isFulFilled: true,
-        bookData: action.payload.data
+        bookData: action.payload.data.data
       };
 
     case "GET_BOOK_BY_ID_PENDING":
@@ -143,6 +144,30 @@ const bookReducer = (state = initialValue, action) => {
         bookData: action.payload.data
       };
 
+    case "SEARCH_BOOK_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "SEARCH_BOOK_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "SEARCH_BOOK_FULFILLED":
+      // state.bookData.data.push(JSON.parse(action.payload.config.data));
+      // console.log("state.bookData:", state.bookData);
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
     default:
       return state;
   }
