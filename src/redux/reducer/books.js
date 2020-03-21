@@ -243,6 +243,52 @@ const bookReducer = (state = initialValue, action) => {
         bookData: action.payload.data
       };
 
+    case "GET_BOOK_RETURN_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "GET_BOOK_RETURN_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "GET_BOOK_RETURN_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
+    case "BOOK_RETURN_PROCESS_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulFilled: false
+      };
+    case "BOOK_RETURN_PROCESS_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+
+    case "BOOK_RETURN_PROCESS_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulFilled: true,
+        bookData: action.payload.data
+      };
+
     default:
       return state;
   }

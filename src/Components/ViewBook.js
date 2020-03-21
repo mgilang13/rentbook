@@ -32,8 +32,8 @@ class ViewBook extends Component {
       this.props.history.push("/home");
     } else {
       this.getBookById();
-      this.viewGenre();
-      this.viewAvail();
+      this.viewGenre(); // for dropdown menu in edit book modal
+      this.viewAvail(); // for dropdown menu in edit book modal
 
       // }
     }

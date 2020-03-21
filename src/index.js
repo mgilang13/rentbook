@@ -5,6 +5,7 @@ import App from "./App";
 import Login from "./Auth/Login";
 import viewBook from "./Components/ViewBook";
 import editBook from "./Components/EditBook";
+import History from "./Components/History.js";
 import deleteBook from "./Components/DeleteBook";
 import Register from "./Auth/Register";
 import * as serviceWorker from "./serviceWorker";
@@ -23,6 +24,7 @@ const AppWithRoute = () => {
         <Route path="/viewBook/" component={viewBook} />
         <Route path="/editBook/" component={editBook} />
         <Route path="/deleteBook/" component={deleteBook} />
+        <Route path="/history/" component={History} />
       </Switch>
     </Router>
   );
